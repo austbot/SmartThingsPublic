@@ -25,8 +25,8 @@ metadata {
 
 		command "switchMode"
 		command "switchFanMode"
-        command "quickSetCool"
-        command "quickSetHeat"
+		command "quickSetCool"
+		command "quickSetHeat"
 
 		fingerprint deviceId: "0x08"
 		fingerprint inClusters: "0x43,0x40,0x44,0x31"
@@ -71,7 +71,22 @@ metadata {
 		reply "2502": "command: 2503, payload: FF"
 	}
 
-	tiles {
+	tiles(scale: 2) {
+		multiAttributeTile(name:"heatingSetPointControl", type:"generic", width:6, height:4) {
+		    tileAttribute("device.heatingSetpoint", key: "VALUE_CONTROL") {
+			attributeState "VALUE_UP", action: "quickSetHeat", backgroundColor:"#bc2323"
+			attributeState "VALUE_DOWN", action: "quickSetHeat",  backgroundColor:"#bc2323"
+		    }
+		}
+		
+		multiAttributeTile(name:"coolingSetPointControl", type:"generic", width:6, height:4) {
+		    tileAttribute("device.coolingSetPoint", key: "VALUE_CONTROL") {
+			attributeState "VALUE_UP", action: "quickSetCool", backgroundColor:"#153591"
+			attributeState "VALUE_DOWN", action: "quickSetCool", backgroundColor:"#153591"
+		    
+		    }
+		}
+		
 		valueTile("temperature", "device.temperature", width: 2, height: 2) {
 			state("temperature", label:'${currentValue}°',
 				backgroundColors:[
